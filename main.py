@@ -28,7 +28,7 @@ class Planet():
         self.color = color
         self.mass = mass  # in kilograms
 
-        self.orbit = []  # this list is used to keep track of all the points the planet has gone through to draw a circular orbit around them
+        self.orbit = []  # used to keep track of all the points the planet has gone through to draw a circular orbit around them
         self.sun = False  # check if the planet is Sun of not
         self.distance_to_sun = 0
 
@@ -38,6 +38,17 @@ class Planet():
     def draw(self, window):
         x = self.x * self.SCALE + (WIDTH / 2)
         y = self.y * self.SCALE + (HEIGHT / 2)
+
+        if len(self.orbit) > 2:
+            updated_points = []
+            for point in self.orbit:
+                x, y = point
+                x = x * self.SCALE + WIDTH / 2
+                y = y * self.SCALE + HEIGHT / 2
+                updated_points.append((x, y))
+
+            pygame.draw.lines(window, self.color, False, updated_points, 2)
+
         pygame.draw.circle(window, self.color, (x, y), self.radius)
     #-------------------------------------------------------------------------
     def attraction(self, other):
